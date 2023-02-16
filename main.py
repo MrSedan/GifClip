@@ -31,7 +31,6 @@ class EntryWindow(Gtk.Window):
         self.button.connect("clicked", self.on_button_clicked)
         self.images = [Gtk.Image.new_from_file('image.gif') for i in range(10)]
         vbox.pack_start(self.button, True, True, 0)
-        # make a grid and add images to it
         self.grid = Gtk.Grid()
         self.grid.set_row_spacing(6)
         self.grid.set_column_spacing(6)
@@ -54,7 +53,6 @@ class EntryWindow(Gtk.Window):
         for i, img in enumerate(response['results']):
             gif_url = img['media_formats']['tinygif']['url']
             response = requests.get(gif_url)
-            # # write the image to a file
             with open(f'./gifs/image{i}.gif', 'wb') as f:
                 f.write(response.content)
             image = Gtk.Image.new_from_file(f'./gifs/image{i}.gif')
