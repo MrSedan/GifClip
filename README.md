@@ -9,6 +9,15 @@ You can run it with installing requirements (_You need to have Python 3.7+ and p
 ```bash
 pip install -r requirements.txt
 ```
+Then you need to set your environment:
+```bash
+export TENOR_API_KEY=YOUR_API_KEY
+```
+
+Or you can just create a `.env` file in project root:
+```bash
+echo "TENOR_API_KEY=YOUR_API_KEY" > .env
+```
 
 ---
 
