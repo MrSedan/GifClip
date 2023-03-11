@@ -5,12 +5,15 @@ import gi, requests, dotenv, os, sys
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
+if not os.getenv('TENOR_API_KEY'):
+    print('TENOR_API_KEY does not stated in environment variables')
+    exit()
 dotenv.load_dotenv()
 
 
 class EntryWindow(Gtk.Window):
     def __init__(self):
-        super().__init__(title="Entry Demo")
+        super().__init__(title="GifClip")
         
         #TODO: Do working ui from UI builder
         builder = Gtk.Builder()
@@ -27,7 +30,7 @@ class EntryWindow(Gtk.Window):
         vbox.pack_start(self.entry, True, True, 0)
         self.entry.connect("key-press-event", self.on_key_press)
         
-        self.button = Gtk.Button(label="Click me")
+        self.button = Gtk.Button(label="Search")
         self.button.connect("clicked", self.on_button_clicked)
         self.images = [Gtk.Image.new_from_file('image.gif') for i in range(10)]
         vbox.pack_start(self.button, True, True, 0)
@@ -48,6 +51,8 @@ class EntryWindow(Gtk.Window):
     
     def on_button_clicked(self, widget):
         print('Clicked')
+        if not os.path.exists('./gifs'):
+            os.mkdir('./gifs')
         url = f"https://tenor.googleapis.com/v2/search?q={self.entry.get_text()}&key={os.getenv('TENOR_API_KEY')}&client_key=my_test_app&limit=10&media_filter=tinygif,gif,tinygifpreview"
         response = requests.get(url).json()
         for i, img in enumerate(response['results']):
