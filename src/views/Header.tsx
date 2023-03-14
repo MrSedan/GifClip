@@ -1,16 +1,43 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./styles/header.css";
 import axios from "axios";
 
-export default function Header() {
-    const [gifs, setGifs] = useState<string[]>([]);
+export default function Header(props: {
+    setGifs?: React.Dispatch<React.SetStateAction<string[]>>;
+}) {
     const [search, setSearch] = useState("");
     const [apiKey, setApiKey] = useState("");
+    const [apiKeyConst, setApiKeyConst] = useState("");
 
-    function addGifs(data: object) {}
+    useEffect(
+        useCallback(() => {
+            const data = JSON.parse(localStorage.getItem("api-key"));
+            console.log(data);
+            if (data != undefined) {
+                setApiKey(data.key);
+                setApiKeyConst(data.key);
+            }
+        }, []),
+        []
+    );
+
+    function addGifs(data: any[]) {
+        let urls: string[] = [];
+        data.map((item) => {
+            urls.push(item.media_formats.tinygif.url);
+        });
+        console.log(urls);
+        props.setGifs(urls);
+    }
+
+    function addErr(data: string) {
+        let err: string[] = ["error", data];
+        props.setGifs(err);
+    }
 
     async function sendRequest() {
         console.log(search, apiKey);
+        props.setGifs([]);
         const clientKey = "my_test_app";
         const lmt = 8;
         try {
@@ -24,21 +51,33 @@ export default function Header() {
                     "&limit=" +
                     lmt
             );
-            console.log(JSON.stringify(data, null, 4));
+            console.log(data);
+            if (data.results.length == 0) {
+                setApiKey("");
+                throw new Error("No gifs...");
+            }
+            addGifs(data.results);
+            localStorage.setItem("api-key", JSON.stringify({ key: apiKey }));
+            setApiKeyConst(apiKey);
         } catch (error) {
+            addErr(error.message);
             console.log(error.message);
         }
     }
     return (
         <div id="header">
-            <input
-                type="text"
-                placeholder="Tenor API Token"
-                id="api-box"
-                onChange={(event) => {
-                    setApiKey(event.target.value);
-                }}
-            />
+            {apiKeyConst == "" && (
+                <input
+                    type="password"
+                    placeholder="Tenor API Token"
+                    id="api-box"
+                    value={apiKey}
+                    onChange={(event) => {
+                        let s = event.target.value;
+                        setApiKey(s);
+                    }}
+                />
+            )}
             <div id="search-box">
                 <input
                     placeholder="Search..."
@@ -54,6 +93,19 @@ export default function Header() {
                     onClick={sendRequest}
                 />
             </div>
+            <button
+                id="clear-api-btn"
+                onClick={() => {
+                    setApiKey("");
+                    setApiKeyConst("");
+                    localStorage.setItem(
+                        "api-key",
+                        JSON.stringify({ key: "" })
+                    );
+                }}
+            >
+                Clear API key
+            </button>
         </div>
     );
 }
