@@ -65,7 +65,6 @@ ipcMain.on("clip-gif", async (_, url) => {
         // clipboard.writeImage(image)
 
         clipboard.writeText(url);
-        console.log("Copied image");
     } catch (error) {
         console.log(error.message);
     }
