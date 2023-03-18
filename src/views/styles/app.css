@@ -9,10 +9,10 @@
 }
 
 img {
-    width: auto;
+    width: 100%;
     height: auto;
     flex: 1 0 150px;
-    margin-top: 30px;
+    margin: 15px 10px;
     overflow: hidden;
     opacity: 0.5;
     flex-shrink: 0;
@@ -44,18 +44,6 @@ img:hover {
 }
 
 #message-box {
-    position: fixed;
-    display: block;
-    top: 90%;
-    opacity: 0;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.5);
-    left: 50%;
-    transform: translateX(-50%);
-    transition: 0.3s ease-out;
-}
-
-#message-box.active {
     display: block;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
@@ -64,8 +52,13 @@ img:hover {
     padding: 10px;
     top: 90%;
     left: 50%;
-    opacity: 1;
+    opacity: 0;
     transform: translateX(-50%);
     border-radius: 17px;
-    transition: 0.1s ease-in;
+    transition: 0.2s ease-out;
+}
+
+#message-box.active {
+    opacity: 1;
+    transition: 0.2s ease-in;
 }
