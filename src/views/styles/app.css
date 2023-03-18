@@ -11,6 +11,7 @@
 img {
     width: auto;
     height: auto;
+    flex: 1 0 150px;
     margin-top: 30px;
     overflow: hidden;
     opacity: 0.5;
@@ -40,4 +41,31 @@ img:hover {
     background-color: #bbb;
     border: 1px solid #444444;
     color: #444444;
+}
+
+#message-box {
+    position: fixed;
+    display: block;
+    top: 90%;
+    opacity: 0;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    left: 50%;
+    transform: translateX(-50%);
+    transition: 0.3s ease-out;
+}
+
+#message-box.active {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    position: fixed;
+    text-align: center;
+    padding: 10px;
+    top: 90%;
+    left: 50%;
+    opacity: 1;
+    transform: translateX(-50%);
+    border-radius: 17px;
+    transition: 0.1s ease-in;
 }
