@@ -3,6 +3,12 @@ import Gallery from "react-photo-gallery";
 import Header from "./Header";
 import "./styles/app.css";
 
+declare global {
+    interface Window {
+        electron: any;
+    }
+}
+
 export default function App() {
     const [gifs, setGifs] = useState<string[]>([]);
     const [activeNotification, setActiveNotification] = useState(false);
@@ -12,7 +18,7 @@ export default function App() {
         setTimeout(() => {
             setActiveNotification(false);
         }, 3000);
-        return electron.notificationApi.sendToClipboard(url);
+        return window.electron.notificationApi.sendToClipboard(url);
     }
     const getGifs = () => {
         const gifArr: { src: string; width: number; height: number }[] = [];
