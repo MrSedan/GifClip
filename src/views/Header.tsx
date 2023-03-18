@@ -12,7 +12,6 @@ export default function Header(props: {
     useEffect(
         useCallback(() => {
             const data = JSON.parse(localStorage.getItem("api-key"));
-            console.log(data);
             if (data != undefined) {
                 setApiKey(data.key);
                 setApiKeyConst(data.key);
@@ -22,7 +21,7 @@ export default function Header(props: {
     );
 
     function addGifs(data: any[]) {
-        let urls: string[] = [];
+        const urls: string[] = [];
         data.map((item) => {
             urls.push(item.media_formats.tinygif.url);
         });
@@ -31,7 +30,7 @@ export default function Header(props: {
     }
 
     function addErr(data: string) {
-        let err: string[] = ["error", data];
+        const err: string[] = ["error", data];
         props.setGifs(err);
     }
 
@@ -51,7 +50,6 @@ export default function Header(props: {
                     "&limit=" +
                     lmt
             );
-            console.log(data);
             if (data.results.length == 0) {
                 setApiKey("");
                 throw new Error("No gifs...");
@@ -73,7 +71,7 @@ export default function Header(props: {
                     id="api-box"
                     value={apiKey}
                     onChange={(event) => {
-                        let s = event.target.value;
+                        const s = event.target.value;
                         setApiKey(s);
                     }}
                 />
