@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Gallery from "react-photo-gallery";
 import Header from "./Header";
 import "./styles/app.css";
 
@@ -13,24 +14,28 @@ export default function App() {
         }, 3000);
         return electron.notificationApi.sendToClipboard(url);
     }
+    const getGifs = () => {
+        const gifArr: { src: string; width: number; height: number }[] = [];
+        gifs.map((item) => {
+            gifArr.push({
+                src: item,
+                width: 1,
+                height: 1,
+            });
+        });
+        return gifArr;
+    };
+
     return (
         <div>
             <Header setGifs={setGifs} />
             <div id="gif-block">
-                {gifs.length > 0 &&
-                    gifs[0] != "error" &&
-                    gifs.map((item, index) => {
-                        return (
-                            <img
-                                key={index}
-                                alt="Some gif"
-                                src={item}
-                                onClick={() => {
-                                    copyImg(item);
-                                }}
-                            />
-                        );
-                    })}
+                {gifs.length > 0 && gifs[0] != "error" && (
+                    <Gallery
+                        photos={getGifs()}
+                        onClick={(e, obj) => copyImg(obj.photo.src)}
+                    />
+                )}
                 {gifs.length == 2 && gifs[0] == "error" && (
                     <p>Error: {gifs[1]}!</p>
                 )}
