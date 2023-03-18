@@ -83,6 +83,9 @@ export default function Header(props: {
                     onChange={(event) => {
                         setSearch(event.target.value);
                     }}
+                    onKeyDown={(event) => {
+                        if (event.key == "Enter" && search != "") sendRequest();
+                    }}
                 />
                 <input
                     type="button"
