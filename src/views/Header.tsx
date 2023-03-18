@@ -35,7 +35,6 @@ export default function Header(props: {
     }
 
     async function sendRequest() {
-        console.log(search, apiKey);
         props.setGifs([]);
         const clientKey = "my_test_app";
         const lmt = 8;
