@@ -9,11 +9,13 @@ import { mainConfig } from "./webpack.main.config";
 import { rendererConfig } from "./webpack.renderer.config";
 
 const config: ForgeConfig = {
-    packagerConfig: {},
+    packagerConfig: {
+        executableName: "linux-gif-clip-electron",
+    },
     rebuildConfig: {},
     makers: [
         new MakerSquirrel({}),
-        new MakerZIP({}, ["darwin"]),
+        new MakerZIP({}),
         new MakerRpm({}),
         new MakerDeb({}),
     ],
@@ -35,6 +37,18 @@ const config: ForgeConfig = {
                 ],
             },
         }),
+    ],
+    publishers: [
+        {
+            name: "@electron-forge/publisher-github",
+            config: {
+                repository: {
+                    owner: "MrSedan",
+                    name: "GifClip-Linux",
+                },
+                prerelease: true,
+            },
+        },
     ],
 };
 
