@@ -1,8 +1,8 @@
 {
     "name": "linux-gif-clip-electron",
     "productName": "Gif Clip Linux",
-    "version": "1.0.0",
-    "description": "My Electron application description",
+    "version": "0.0.1-Beta",
+    "description": "An app to take gifs from Tenor",
     "main": ".webpack/main",
     "scripts": {
         "start": "electron-forge start",
@@ -24,6 +24,7 @@
         "@electron-forge/maker-squirrel": "^6.0.5",
         "@electron-forge/maker-zip": "^6.0.5",
         "@electron-forge/plugin-webpack": "^6.0.5",
+        "@electron-forge/publisher-github": "^6.0.5",
         "@types/react": "^18.0.28",
         "@types/react-dom": "^18.0.11",
         "@typescript-eslint/eslint-plugin": "^5.0.0",
@@ -31,6 +32,7 @@
         "@vercel/webpack-asset-relocator-loader": "1.7.3",
         "css-loader": "^6.0.0",
         "electron": "23.1.4",
+        "electron-forge-maker-appimage": "^24.0.0",
         "eslint": "^8.0.1",
         "eslint-plugin-import": "^2.25.0",
         "fork-ts-checker-webpack-plugin": "^8.0.0",
